@@ -10,7 +10,7 @@ Add these to your saltstack states:
     
 The states depend on their actual location in the state file tree, so naming `salt/icinga-moaas` is mandatory.
 
-## Requires pillar
+### Requires pillar
 
 ```sls
 icinga:
@@ -24,6 +24,29 @@ icinga:
   masterzone: "ip-...ec2.internal"
 
 ```
+
+### Apply states
+
+check pillar config:
+
+    # salt 'myhost.example.com' pillar.items icinga
+    myhost.example.com:
+        ----------
+        icinga:
+            ----------
+            apiaccess:
+                cebe:*******
+            apiurl:
+                http://master.example.com/icingaweb2
+            masterhost:
+                master.example.com
+            masterzone:
+                ip-********.ec2.internal
+
+apply state:
+
+    # salt 'myhost.example.com' state.sls icinga-moaas
+
 
 ## Supported OSs
 
