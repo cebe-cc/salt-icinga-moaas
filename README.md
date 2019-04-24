@@ -14,7 +14,7 @@ The states depend on their actual location in the state file tree, so naming `sa
 
 ```sls
 icinga:
-  # username and password for ApiUser on icinga master
+  # username and password for access to the director API
   apiaccess: user:password
   # Base URL for icingaweb to access director API
   apiurl: "https://master.example.com/icingaweb2"
