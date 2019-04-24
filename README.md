@@ -12,7 +12,18 @@ The states depend on their actual location in the state file tree, so naming `sa
 
 ## Requires pillar
 
-... TODO
+```sls
+icinga:
+  # username and password for ApiUser on icinga master
+  apiaccess: user:password
+  # Base URL for icingaweb to access director API
+  apiurl: "https://master.example.com/icingaweb2"
+  # Hostname to connect to the icinga master
+  masterhost: "master.example.com"
+  # Name of the icinga master zone
+  masterzone: "ip-...ec2.internal"
+
+```
 
 ## Supported OSs
 
