@@ -34,13 +34,12 @@ self="{ \
 	\"address\": \"$(dig +noall +answer "${host}" A |awk '{print $5}')\", \
 	\"address6\": \"$(dig +noall +answer "${host}" AAAA |awk '{print $5}')\", \
 	\"display_name\": \"${host}\", \
-	\"imports\": [ \"Base Host\"], \
+	\"imports\": [ \"Base Clusterzone\"], \
 	\"object_name\": \"${host}\", \
 	\"object_type\": \"object\", \
 	\"accept_config\": true, \
-	\"master_should_connect\": true, \
+	\"master_should_connect\": false, \
 	\"has_agent\": true, \
-	\"zone\": \"${host}\", \
 	\"vars\": { \
 		\"os\": \"${os}\" \
 	} \
