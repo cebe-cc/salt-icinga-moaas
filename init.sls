@@ -83,3 +83,9 @@ icinga_service:
     - source: https://exchange.icinga.com/exchange/check_md_raid/files/661/check_md_raid.sh
     - source_hash: sha256=d3e79c66349d0f0b4ef30d3b1ba96075052a806621c16c48f910a28999ff8a59
     - mode: '0755'
+
+/usr/lib/nagios/plugins/check_galera_cluster:
+  file.managed:
+    - source: https://raw.githubusercontent.com/fridim/nagios-plugin-check_galera_cluster/aa17849014180c2025beb6a36e268f6f54981744/check_galera_cluster
+    - source_hash: sha256=dc6760969ec31fc10fb745f0c32e6c0bcea3926d721b60bc190d1b8b27aac644
+    - mode: '0755'
