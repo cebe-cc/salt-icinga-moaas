@@ -94,3 +94,9 @@ python3-gi:
     - source: https://raw.githubusercontent.com/pengutronix/monitoring-check-systemd-service/b0482f800d788beb36fee7c63f48b35fcd2fc2e4/check-systemd-service
     - source_hash: sha256=5c0c21adec8acc8f0298afdf1425282fa44ad2430f832786ba144dbe60f9970f
     - mode: '0755'
+
+/usr/lib/nagios/plugins/check_galera_cluster:
+  file.managed:
+    - source: https://raw.githubusercontent.com/fridim/nagios-plugin-check_galera_cluster/aa17849014180c2025beb6a36e268f6f54981744/check_galera_cluster
+    - source_hash: sha256=dc6760969ec31fc10fb745f0c32e6c0bcea3926d721b60bc190d1b8b27aac644
+    - mode: '0755'
