@@ -34,7 +34,7 @@ self="{ \
 	\"address\": \"$(dig +noall +answer "${host}" A |awk '{print $5}')\", \
 	\"address6\": \"$(dig +noall +answer "${host}" AAAA |awk '{print $5}')\", \
 	\"display_name\": \"${host}\", \
-	\"imports\": [ \"Base Clusterzone\"], \
+	\"imports\": [ \"BaseClusterzone\"], \
 	\"object_name\": \"${host}\", \
 	\"object_type\": \"object\", \
 	\"accept_config\": true, \
@@ -46,18 +46,18 @@ self="{ \
 }"
 
 echo "creating zone: $zone"
-curl -s -S -f -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/zone -X PUT -d "$zone" || \
-  curl -s -S -f -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/zone?name=${host} -X POST -d "$zone" || exit 1
+curl -s -S -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/zone -X PUT -d "$zone" || \
+  curl -s -S -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/zone?name=${host} -X POST -d "$zone" || exit 1
 echo "done."
 
 echo "creating host: $self"
-curl -s -S -f -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/host -X PUT -d "$self" || \
-  curl -s -S -f -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/host?name=${host} -X POST -d "$self" || exit 1
+curl -s -S -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/host -X PUT -d "$self" || \
+  curl -s -S -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/host?name=${host} -X POST -d "$self" || exit 1
 echo "done."
 
 echo "creating endpoint: $endpoint"
-curl -s -S -f -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/endpoint -X PUT -d "$endpoint" || \
-  curl -s -S -f -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/endpoint?name=${host} -X POST -d "$endpoint" || exit 1
+curl -s -S -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/endpoint -X PUT -d "$endpoint" || \
+  curl -s -S -u "$APIACCESS" -H "Accept: application/json" $APIURL/director/endpoint?name=${host} -X POST -d "$endpoint" || exit 1
 echo "done."
 
 

@@ -84,6 +84,17 @@ icinga_service:
     - source_hash: sha256=d3e79c66349d0f0b4ef30d3b1ba96075052a806621c16c48f910a28999ff8a59
     - mode: '0755'
 
+python3-nagiosplugin:
+  pkg.installed
+python3-gi:
+  pkg.installed
+
+/usr/lib/nagios/plugins/check-systemd-service:
+  file.managed:
+    - source: https://raw.githubusercontent.com/pengutronix/monitoring-check-systemd-service/b0482f800d788beb36fee7c63f48b35fcd2fc2e4/check-systemd-service
+    - source_hash: sha256=5c0c21adec8acc8f0298afdf1425282fa44ad2430f832786ba144dbe60f9970f
+    - mode: '0755'
+
 /usr/lib/nagios/plugins/check_galera_cluster:
   file.managed:
     - source: https://raw.githubusercontent.com/fridim/nagios-plugin-check_galera_cluster/aa17849014180c2025beb6a36e268f6f54981744/check_galera_cluster
