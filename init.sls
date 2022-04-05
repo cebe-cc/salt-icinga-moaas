@@ -50,37 +50,46 @@ icinga_setup:
       - pkg: icinga2
       - pkg: icinga_packages
 
+# add user nagios to group adm to be able to read log files
+adduser nagios adm:
+  cmd.run:
+    - unless: 'groups nagios |grep "\badm\b"'
+    - require:
+      - cmd: icinga_setup
+
 icinga_service:
   service.running:
     - enable: True
     - name: icinga2
     - watch:
       - cmd: icinga_setup
+      - cmd: adduser nagios adm
       - file: /etc/icinga2/zones.conf
       - file: /etc/icinga2/conf.d
 
 # install plugins
 /usr/lib/nagios/plugins/check_cpu:
   file.managed:
-    - source: https://s3.amazonaws.com/monitoring-plugins/Linux/check_cpu
+    - source: https://s3.dualstack.us-east-1.amazonaws.com/monitoring-plugins/Linux/check_cpu
     - source_hash: sha256=107fe41e65915de0817cbdc4399f2767add721cc4abffe2827d37d65dc8fad51
     - mode: '0755'
 
 /usr/lib/nagios/plugins/check_linux_memory:
   file.managed:
-    - source: https://s3.amazonaws.com/monitoring-plugins/Linux/check_linux_memory
+    - source: https://s3.dualstack.us-east-1.amazonaws.com/monitoring-plugins/Linux/check_linux_memory
     - source_hash: sha256=d21e46c68e9bfd665a04929a68ddfdc9e6bf2bae675768de209494b9fb86aa21
     - mode: '0755'
 
 /usr/lib/nagios/plugins/check_logfiles:
   file.managed:
-    - source: https://s3.amazonaws.com/monitoring-plugins/Linux/check_logfiles
+    - source: https://s3.dualstack.us-east-1.amazonaws.com/monitoring-plugins/Linux/check_logfiles
     - source_hash: sha256=9b4fcbc1634179d7bd7adcf77a56b6bf3603eb82c1ff133a8962591f0e1130a1
     - mode: '0755'
 
 /usr/lib/nagios/plugins/check_md_raid.sh:
   file.managed:
-    - source: https://exchange.icinga.com/exchange/check_md_raid/files/661/check_md_raid.sh
+#    - source: https://exchange.icinga.com/exchange/check_md_raid/files/661/check_md_raid.sh
+    - source: salt://icinga-moaas/plugins/check_md_raid.sh
     - source_hash: sha256=d3e79c66349d0f0b4ef30d3b1ba96075052a806621c16c48f910a28999ff8a59
     - mode: '0755'
 
@@ -88,6 +97,18 @@ python3-nagiosplugin:
   pkg.installed
 python3-gi:
   pkg.installed
+
+{% if grains['oscodename'] == 'buster' %}
+# this file does not contain the logfile check in buster, but works fine on bullseye 
+/usr/share/icinga2/include/plugins-contrib.d/logmanagement.conf:
+  file.managed:
+    - source: salt://icinga-moaas/usr/share/icinga2/include/plugins-contrib.d/logmanagement.conf
+    - require:
+      - cmd: icinga_setup
+    - watch_in:
+      - service: icinga_service
+{% endif %}
+
 
 /usr/lib/nagios/plugins/check-systemd-service:
   file.managed:
