@@ -51,4 +51,7 @@ apply state:
 ## Supported OSs
 
 - Debian
+  - 12, `sid` 
+  - 11, `bullseye` 
+  - 10, `buster` 
   - 9, `stretch`
